@@ -1,0 +1,13 @@
+<launch>
+    <arg name="respawn" default="false" />
+    <arg name="debug" default="false" />
+    <arg name="node_name" default="pylon_camera_node" />
+
+    <arg unless="$(arg debug)" name="launch_prefix" value="" />
+    <arg     if="$(arg debug)" name="launch_prefix" value="gdb -ex run --args" />
+
+    <node name="lane_detection" pkg="lane_detection" type="lane_detection" output="screen">
+    	<param name="CameraSub" value="/camera1/image_raw" />
+	
+    </node>
+</launch>

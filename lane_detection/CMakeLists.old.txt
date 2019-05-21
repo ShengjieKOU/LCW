@@ -1,0 +1,35 @@
+cmake_minimum_required(VERSION 2.8.3)
+project(image_process)
+
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  std_msgs
+  sensor_msgs
+  cv_bridge
+  image_transport
+  message_generation
+)
+
+add_message_files(
+    FILES
+    mat_pub.msg
+)
+
+generate_messages(
+   DEPENDENCIES
+   std_msgs
+)
+
+#catkin_package()
+catkin_package( 
+  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
+)
+find_package(OpenCV)
+include_directories(
+  ${OpenCV_INCLUDE_DIRS}
+)
+
+include_directories(include ${catkin_INCLUDE_DIRS})
+add_executable(image_process src/image_process.cpp)
+target_link_libraries(image_process ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+add_dependencies(image_process image_process_generate_messages_cpp)
